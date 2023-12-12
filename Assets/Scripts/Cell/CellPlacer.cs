@@ -4,17 +4,11 @@ namespace MinecraftWordle.Cell
 {
     public class CellPlacer : CellPresenter
     {
-        public CellPlacer(CellModel cellModel) : base(cellModel) {}
-
-        private void PlaceItem()
-        {
-            if(CellSelector.SelectedItem != null)
-                _cellModel.ChangeItem(CellSelector.SelectedItem);
-        }
+        public CellPlacer(CellModel cellModel, CursorItem cursorItem) : base(cellModel, cursorItem) {}
 
         public override void OnCellClicked()
         {
-            PlaceItem();
+            base.OnCellClicked();
         }
     }
 }

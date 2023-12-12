@@ -8,8 +8,7 @@ namespace MinecraftWordle.Cell
 
         public override void ChangeItem(ItemModel newItem)
         {
-            _item = newItem;
-            _view.DisplayItem(_item);
+            base.ChangeItem(newItem);
         }
     }
 }

@@ -11,6 +11,9 @@ namespace MinecraftWordle.Cell
             _item = item;
         }
 
-        public override void ChangeItem(ItemModel newSprite){}
+        public override void ChangeItem(ItemModel newSprite)
+        {
+            base.ChangeItem(newSprite);
+        }
     }
 }

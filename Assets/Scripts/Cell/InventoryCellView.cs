@@ -10,7 +10,7 @@ namespace MinecraftWordle.Cell
 
         public ItemModel StartItem => _startItem;
 
-        private void Awake()
+        private void OnValidate ()
         {
             if(_startItem != null)
             {

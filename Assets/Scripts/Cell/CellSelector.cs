@@ -9,12 +9,11 @@ namespace MinecraftWordle.Cell
 
         public static ItemModel SelectedItem => _selectedItem;
         
-        public CellSelector(CellModel cellModel) : base(cellModel) {}
+        public CellSelector(CellModel cellModel, CursorItem cursorItem) : base(cellModel, cursorItem) {}
 
         public override void OnCellClicked()
         {
-            if(_cellModel.Item != null)
-                _selectedItem = _cellModel.Item;
+            base.OnCellClicked();
         }
     }
 }
