@@ -4,9 +4,10 @@ using UnityEngine;
 
 namespace MinecraftWordle.Item
 {
-    [CreateAssetMenu(fileName = "New Item", menuName = "ScriptableObjects/Item", order = 51)]
+    [CreateAssetMenu(fileName = "NewItem", menuName = "ScriptableObjects/Item", order = 51)]
     public class ItemModel : ScriptableObject
     {
+        [SerializeField] private uint _index;
         [SerializeField] private Sprite _sprite;
 
         public Sprite Sprite 
@@ -20,20 +21,11 @@ namespace MinecraftWordle.Item
                 _sprite = value;
             }
         }
+        public int Index => (int)_index;
 
-        public override bool Equals(object obj)
+        public bool Compare(ItemModel other)
         {
-            return obj is ItemModel model &&
-                   base.Equals(obj) &&
-                   name == model.name &&
-                   hideFlags == model.hideFlags &&
-                   EqualityComparer<Sprite>.Default.Equals(_sprite, model._sprite) &&
-                   EqualityComparer<Sprite>.Default.Equals(Sprite, model.Sprite);
-        }
-
-        public override int GetHashCode()
-        {
-            return HashCode.Combine(base.GetHashCode(), name, hideFlags, _sprite, Sprite);
+            return other._index == _index;
         }
     }
 }
