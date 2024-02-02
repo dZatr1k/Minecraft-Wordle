@@ -10,7 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 357477bc1df2b8847be73687e51c53ba, type: 3}
-  m_Name: Iron
+  m_Name: Readstone
   m_EditorClassIdentifier: 
-  _index: 0
-  _sprite: {fileID: -966116045, guid: c797b31ae97bc824b8eaf9882d18b29c, type: 3}
+  _sprite: {fileID: 0}

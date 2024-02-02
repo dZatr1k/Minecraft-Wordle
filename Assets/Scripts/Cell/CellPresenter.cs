@@ -7,6 +7,8 @@ namespace MinecraftWordle.Cell
         protected CursorItem _cursorItem;
         protected CellModel _cellModel;
 
+        public CellModel CellModel => _cellModel;
+
         public CellPresenter(CellModel cellModel, CursorItem cursorItem)
         {
             _cellModel = cellModel;

@@ -27,6 +27,8 @@ namespace MinecraftWordle.Cell
 
         protected CellPresenter _presenter;
 
+        public CellPresenter CellPresenter => _presenter;
+
         public void Init(CellPresenter presenter)
         {
             _presenter = presenter;

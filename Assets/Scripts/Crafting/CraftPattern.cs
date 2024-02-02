@@ -1,4 +1,5 @@
 using MinecraftWordle.Extensions;
+using MinecraftWordle.Item;
 using System;
 using System.Linq;
 using UnityEngine;
@@ -14,19 +15,6 @@ namespace MinecraftWordle.Crafting
 
         public int Length => (int)_lineItemCount;
 
-        private CraftPattern(uint lineItemCount, LinePattern[] lines)
-        {
-            _lineItemCount = lineItemCount;
-
-            if (lines == null)
-                throw new ArgumentNullException("Lines is null.");
-
-            if(lines.All(x => x == null || x.Length == lineItemCount) == false)
-                throw new ArgumentException($"Line must contains {lineItemCount} items.");
-
-            _lines = lines;
-        }
-
         public CraftPattern(uint lineItemCount)
         {
             _lineItemCount = lineItemCount;
@@ -36,6 +24,24 @@ namespace MinecraftWordle.Crafting
             {
                 _lines[i] = new LinePattern(lineItemCount);
             }
+        }
+
+        public CraftPattern(uint lineItemCount, LinePattern[] lines)
+        {
+            _lineItemCount = lineItemCount;
+
+            if (lines == null)
+                throw new ArgumentNullException("Lines is null.");
+
+            if (lines.All(x => x == null || x.Length == lineItemCount) == false)
+                throw new ArgumentException($"Line must contains {lineItemCount} items.");
+
+            _lines = lines;
+        }
+
+        public void SetItem(ItemModel item, uint row, uint column)
+        {
+            _lines[column].SetItem(item, row);
         }
 
         public CraftPattern GetUpLeftEdgeNormalizedPattern()
@@ -50,15 +56,7 @@ namespace MinecraftWordle.Crafting
                 .Min();
             lines.ForEach(x => x.Resize(lineSpacing));
 
-            Debug.Log(lineSpacing);
             return new CraftPattern(_lineItemCount, lines.ToArray());
-        }
-
-        public override string ToString()
-        {
-            var result = "";
-            _lines.ToList().ForEach(x => result += x.ToString() + "\n");
-            return result;
         }
     }
 }

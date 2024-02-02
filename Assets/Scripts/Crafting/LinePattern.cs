@@ -22,6 +22,14 @@ namespace MinecraftWordle.Crafting
             _items = new ItemModel[(int)itemCount];
 		}
 
+        public void SetItem(ItemModel item, uint index)
+        {
+            if (index >= Length || index < 0)
+                throw new ArgumentException("Incorrect index");
+
+            _items[index] = item;
+        }
+
         public bool IsEmpty()
         {
             return _items.All(x => x == null);

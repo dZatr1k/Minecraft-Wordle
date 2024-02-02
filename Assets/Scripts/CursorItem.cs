@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 namespace MinecraftWordle.Item
@@ -32,6 +33,8 @@ namespace MinecraftWordle.Item
 
         public void SelectItem(ItemModel item)
         {
+            if (item == null)
+                throw new ArgumentException("Item was null. Use DeselectItem instead.");
             ChangeItem(item);
         }
 

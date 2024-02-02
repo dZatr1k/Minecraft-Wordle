@@ -10,21 +10,21 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 584b16e4b15172f4db22c564fce382ac, type: 3}
-  m_Name: TestCraft
+  m_Name: IronPickaxe
   m_EditorClassIdentifier: 
   _pattern:
     _lines:
     - _items:
-      - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
+      - {fileID: 11400000, guid: e886ddb913958fc4c8117ee26ebde84c, type: 2}
+      - {fileID: 11400000, guid: e886ddb913958fc4c8117ee26ebde84c, type: 2}
+      - {fileID: 11400000, guid: e886ddb913958fc4c8117ee26ebde84c, type: 2}
     - _items:
       - {fileID: 0}
-      - {fileID: 0}
-      - {fileID: 0}
-    - _items:
       - {fileID: 11400000, guid: 8a30b5c0ce22a2743bd3622e854db6ad, type: 2}
       - {fileID: 0}
+    - _items:
+      - {fileID: 0}
+      - {fileID: 11400000, guid: 8a30b5c0ce22a2743bd3622e854db6ad, type: 2}
       - {fileID: 0}
   _result: {fileID: 0}
   _lineItemCount: 3

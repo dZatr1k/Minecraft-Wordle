@@ -4,14 +4,18 @@ using System.Collections.Generic;
 using UnityEngine;
 using MinecraftWordle.Cell;
 using MinecraftWordle.Item;
+using MinecraftWordle.Extensions;
 
 namespace MinecraftWordle.Game
 {
     public class GameInitializer : MonoBehaviour
     {
         [Header("Indetifiers of view lists")]
-        [SerializeField] private InventoryIndetifier _inventoryIndetifier;
-        [SerializeField] private CraftingIndentifier _craftingIndetifier;
+        [SerializeField] private Inventory _inventory;
+        [SerializeField] private CraftingTable _craftingTable;
+
+        [Header("Items")]
+        [SerializeField] private List<ItemModel> _items;
 
         [Header("Other")]
         [SerializeField] private CursorItem _cursorItem;
@@ -23,8 +27,8 @@ namespace MinecraftWordle.Game
         {
             _cursorItem = FindObjectOfType<CursorItem>();
 
-            _inventoryViews = GetList<InventoryCellView, InventoryIndetifier>(ref _inventoryIndetifier);
-            _craftingViews = GetList<CraftingCellView, CraftingIndentifier>(ref _craftingIndetifier);
+            _inventoryViews = GetList<InventoryCellView, Inventory>(ref _inventory);
+            _craftingViews = GetList<CraftingCellView, CraftingTable>(ref _craftingTable);
         }
 
         private void Awake()
@@ -40,6 +44,12 @@ namespace MinecraftWordle.Game
 
         private void InitializeInventory()
         {
+            _items.Shuffle();
+            for (int i = 0; i < Mathf.Min(_inventoryViews.Count, _items.Count); i++)
+            {
+                _inventoryViews[i].StartItem = _items[i];
+            }
+
             InitializeViews(_inventoryViews,
                 view => new InventoryCellModel(view, view.StartItem),
                 model => new CellSelector(model, _cursorItem));
@@ -48,8 +58,10 @@ namespace MinecraftWordle.Game
         private void InitializeCrafting()
         {
             InitializeViews(_craftingViews,
-                view => new CraftingCellModel(view),
+                view => new CraftingCellModel(view, view.ColumnIndex, view.RowIndex),
                 model => new CellPlacer(model, _cursorItem));
+
+            _craftingTable.Init(_craftingViews.Select(x => (CraftingCellModel)x.CellPresenter.CellModel));
         }
 
         private List<TResult> GetList<TResult, TIndentifier>(ref TIndentifier indentifier) 
@@ -59,7 +71,7 @@ namespace MinecraftWordle.Game
             indentifier ??= FindObjectOfType<TIndentifier>();
 
             if (indentifier == null)
-                throw new ArgumentNullException($"Add {typeof(TIndentifier)} on Scene");
+                throw new ArgumentNullException($"Add {typeof(TIndentifier).Name} on Scene");
 
             return indentifier.GetComponentsInChildren<TResult>().ToList();
         }

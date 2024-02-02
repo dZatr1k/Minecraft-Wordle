@@ -8,7 +8,18 @@ namespace MinecraftWordle.Cell
 
         public override void OnCellClicked()
         {
-            base.OnCellClicked();
+            if(_cursorItem.IsItemSelected) 
+            {
+                if (_cellModel.Item == null)
+                    _cellModel.ChangeItem(_cursorItem.SelectedItem);
+                else
+                    _cursorItem.DeselectItem();
+            }
+            else
+            {
+                _cursorItem.SelectItem(_cellModel.Item);
+                _cellModel.DeleteItem();
+            }
         }
     }
 }

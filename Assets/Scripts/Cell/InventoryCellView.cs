@@ -6,11 +6,15 @@ namespace MinecraftWordle.Cell
 {
     public class InventoryCellView : CellView
     {
-        [SerializeField] protected ItemModel _startItem;
+        private ItemModel _startItem;
 
-        public ItemModel StartItem => _startItem;
+        public ItemModel StartItem
+        {
+            get { return _startItem; }
+            set { _startItem = value; }
+        }
 
-        private void OnValidate ()
+        private void Start()
         {
             if(_startItem != null)
             {
