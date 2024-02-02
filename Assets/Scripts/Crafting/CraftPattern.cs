@@ -1,6 +1,7 @@
 using MinecraftWordle.Extensions;
 using MinecraftWordle.Item;
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 
@@ -14,6 +15,8 @@ namespace MinecraftWordle.Crafting
         private uint _lineItemCount;
 
         public int Length => (int)_lineItemCount;
+
+        public IEnumerable<LinePattern> Lines => _lines;
 
         public CraftPattern(uint lineItemCount)
         {
@@ -36,7 +39,11 @@ namespace MinecraftWordle.Crafting
             if (lines.All(x => x == null || x.Length == lineItemCount) == false)
                 throw new ArgumentException($"Line must contains {lineItemCount} items.");
 
-            _lines = lines;
+            _lines = new LinePattern[lines.Length];
+            for (int i = 0; i < _lines.Length; i++)
+            {
+                _lines[i] = new LinePattern(lines[i]);
+            }
         }
 
         public void SetItem(ItemModel item, uint row, uint column)
@@ -46,7 +53,8 @@ namespace MinecraftWordle.Crafting
 
         public CraftPattern GetUpLeftEdgeNormalizedPattern()
         {
-            var lines = _lines
+            var result = new CraftPattern(_lineItemCount, _lines);
+            var lines = result.Lines
                 .SkipWhile(x => x.IsEmpty())
                 .ToList();
             lines.FillTo(Length, () => new LinePattern(_lineItemCount));
@@ -56,7 +64,24 @@ namespace MinecraftWordle.Crafting
                 .Min();
             lines.ForEach(x => x.Resize(lineSpacing));
 
-            return new CraftPattern(_lineItemCount, lines.ToArray());
+            return result;
+        }
+
+        public override string ToString()
+        {
+            var result = "";
+            foreach (var line in Lines)
+            {
+                foreach (var item in line.Items)
+                {
+                    if (item == null)
+                        result += "0 ";
+                    else
+                        result += "1 ";
+                }
+                result += "\n";
+            }
+            return result;
         }
     }
 }

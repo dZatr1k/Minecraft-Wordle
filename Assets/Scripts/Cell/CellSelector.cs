@@ -4,8 +4,13 @@ using MinecraftWordle.Item;
 namespace MinecraftWordle.Cell
 {
     public class CellSelector : CellPresenter
-    {   
-        public CellSelector(CellModel cellModel, CursorItem cursorItem) : base(cellModel, cursorItem) {}
+    {
+        private CursorItem _cursorItem;
+        public CellSelector(CellModel cellModel, CursorItem cursorItem) : base(cellModel) 
+        {
+
+            _cursorItem = cursorItem;
+        }
 
         public override void OnCellClicked()
         {

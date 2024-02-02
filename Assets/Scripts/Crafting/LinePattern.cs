@@ -16,11 +16,23 @@ namespace MinecraftWordle.Crafting
 
         public int Length => (int)_itemCount;
 
+        public IEnumerable<ItemModel> Items => _items;
+
 		public LinePattern(uint itemCount)
 		{
             _itemCount = itemCount;
             _items = new ItemModel[(int)itemCount];
 		}
+
+        public LinePattern(LinePattern pattern)
+        {
+            _itemCount = pattern._itemCount;
+            _items = new ItemModel[pattern.Length];
+            for (int i = 0; i < _items.Length; i++)
+            {
+                _items[i] = pattern._items[i];
+            }
+        }
 
         public void SetItem(ItemModel item, uint index)
         {

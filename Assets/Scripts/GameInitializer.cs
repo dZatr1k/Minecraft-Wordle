@@ -5,6 +5,7 @@ using UnityEngine;
 using MinecraftWordle.Cell;
 using MinecraftWordle.Item;
 using MinecraftWordle.Extensions;
+using MinecraftWordle.Crafting;
 
 namespace MinecraftWordle.Game
 {
@@ -16,12 +17,14 @@ namespace MinecraftWordle.Game
 
         [Header("Items")]
         [SerializeField] private List<ItemModel> _items;
+        [SerializeField] private CraftChecker _checker;
 
         [Header("Other")]
         [SerializeField] private CursorItem _cursorItem;
 
         private List<InventoryCellView> _inventoryViews;
         private List<CraftingCellView> _craftingViews;
+        private ResultCellView _resultView;
 
         private void OnValidate()
         {
@@ -29,6 +32,8 @@ namespace MinecraftWordle.Game
 
             _inventoryViews = GetList<InventoryCellView, Inventory>(ref _inventory);
             _craftingViews = GetList<CraftingCellView, CraftingTable>(ref _craftingTable);
+            _checker = FindObjectOfType<CraftChecker>();
+            _resultView = FindObjectOfType<ResultCellView>();
         }
 
         private void Awake()
@@ -40,6 +45,13 @@ namespace MinecraftWordle.Game
         {
             InitializeInventory();
             InitializeCrafting();
+            InitilizeResult();
+        }
+
+        private void InitilizeResult()
+        {
+            var presenter = new CellResulter(new ResultCellModel(_resultView), _checker);
+            _resultView.Init(presenter);
         }
 
         private void InitializeInventory()
@@ -60,8 +72,6 @@ namespace MinecraftWordle.Game
             InitializeViews(_craftingViews,
                 view => new CraftingCellModel(view, view.ColumnIndex, view.RowIndex),
                 model => new CellPlacer(model, _cursorItem));
-
-            _craftingTable.Init(_craftingViews.Select(x => (CraftingCellModel)x.CellPresenter.CellModel));
         }
 
         private List<TResult> GetList<TResult, TIndentifier>(ref TIndentifier indentifier) 

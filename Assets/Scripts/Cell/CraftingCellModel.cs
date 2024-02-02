@@ -5,7 +5,7 @@ namespace MinecraftWordle.Cell
 {
     public class CraftingCellModel : CellModel
     {
-        public static UnityAction<CraftingCellModel> OnItemChanged;
+        public static UnityAction<CraftingCellModel> ItemChanged;
 
         private uint _columnIndex;
         private uint _rowIndex;
@@ -22,13 +22,13 @@ namespace MinecraftWordle.Cell
         public override void ChangeItem(ItemModel newItem)
         {
             base.ChangeItem(newItem);
-            OnItemChanged?.Invoke(this);
+            ItemChanged?.Invoke(this);
         }
 
         public override void DeleteItem()
         {
             base.DeleteItem();
-            OnItemChanged?.Invoke(this);
+            ItemChanged?.Invoke(this);
         }
     }
 }

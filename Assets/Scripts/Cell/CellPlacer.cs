@@ -4,7 +4,11 @@ namespace MinecraftWordle.Cell
 {
     public class CellPlacer : CellPresenter
     {
-        public CellPlacer(CellModel cellModel, CursorItem cursorItem) : base(cellModel, cursorItem) {}
+        protected CursorItem _cursorItem;
+        public CellPlacer(CellModel cellModel, CursorItem cursorItem) : base(cellModel) 
+        {
+            _cursorItem = cursorItem;
+        }
 
         public override void OnCellClicked()
         {
